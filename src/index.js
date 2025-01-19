@@ -7,6 +7,7 @@ const user = require('./schema/userSchema');
 const userRouter = require('./routes/userRoute.js');
 const cartRouter = require('./routes/cartRoute.js');
 const authRouter = require('./routes/authRoute.js');
+const { isLoggedIn } = require('./validation/authValidator.js');
 
 const app = express();
 
@@ -19,7 +20,8 @@ app.use('/user', userRouter);
 app.get('/carts', cartRouter);
 app.use('/auth', authRouter);
 
-app.post('/ping', (req, res) => {
+app.get('/ping', isLoggedIn, (req, res) => {
+    // controller
     console.log(req.body);
     console.log(req.cookies);
     return res.json({message: "pong"});

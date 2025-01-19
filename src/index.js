@@ -1,5 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser')
+const fs = require('fs/promises');
 
 const ServerConfig = require('./config/serverConfig');
 const connectDB = require('./config/dbConfig');
@@ -8,6 +9,9 @@ const userRouter = require('./routes/userRoute.js');
 const cartRouter = require('./routes/cartRoute.js');
 const authRouter = require('./routes/authRoute.js');
 const { isLoggedIn } = require('./validation/authValidator.js');
+const uploader = require('./middlewares/multerMiddleware.js');
+const cloudinary = require('./config/cloudinaryConfig.js');
+
 
 const app = express();
 
@@ -25,6 +29,16 @@ app.get('/ping', isLoggedIn, (req, res) => {
     console.log(req.body);
     console.log(req.cookies);
     return res.json({message: "pong"});
+})
+
+app.post('/photo', uploader.single('incomingFile'), async (req, res) => {
+    console.log(req.file);
+    const result = await cloudinary.uploader.upload(req.file.path);
+    console.log("result from cloudinary", result);
+    await fs.unlink(req.file.path); // delete the file from the server after uploading to cloudinary
+    return res.json({
+        message: "photo uploaded successfully"
+    });
 })
 
 app.listen(ServerConfig.PORT, async () => {

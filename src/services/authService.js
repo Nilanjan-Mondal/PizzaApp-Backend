@@ -31,7 +31,9 @@ async function loginUser (authDetails) {
 
     // 3. If the password is correct we will create a token and return it to the user
 
-    const token = jwt.sign({email: user.email, id: user._id}, JWT_SECRET, {expiresIn: "60h"});
+    const userRole = user.role ? user.role : "USER";
+
+    const token = jwt.sign({email: user.email, id: user._id, role: userRole}, JWT_SECRET, {expiresIn: "60h"});
 
     return token;
 }

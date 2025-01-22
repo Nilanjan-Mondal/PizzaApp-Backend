@@ -18,7 +18,8 @@ const isLoggedIn = (req, res, next) => {
         req.user = {
             // adding user details to the request object so that we can access the user details in the controllers
             id: decoded.id,
-            email: decoded.email
+            email: decoded.email,
+            role: decoded.role
         };
 
         next(); // call the next middleware or controller
@@ -33,6 +34,25 @@ const isLoggedIn = (req, res, next) => {
     }
 }
 
+
+// This function checks if the authenticated user is an admin or not
+// because we will call isAdmin after isLoggedIn thats whu we will receive the user details in the request object
+function isAdmin(req, res, next) {
+    console.log("req.user : ", req.user);
+    const loggedInUser = req.user;
+    if(loggedInUser.role == "ADMIN") {
+        next(); 
+    } else {
+        return res.status(401).json({
+            success: false,
+            data: {},
+            error: "forbidden",
+            message: "You are not authorized to access this resource"
+        });
+    }
+}
+
 module.exports = {
-    isLoggedIn
+    isLoggedIn,
+    isAdmin
 }

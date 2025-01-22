@@ -37,4 +37,6 @@ const productSchema = new mongoose.Schema({
 
 const Product = mongoose.model('Product', productSchema); // Product is the name of the collection in the database
 
-module.exports = Product;
+module.exports = {
+    Product
+};

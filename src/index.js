@@ -11,6 +11,7 @@ const authRouter = require('./routes/authRoute.js');
 const { isLoggedIn } = require('./validation/authValidator.js');
 const uploader = require('./middlewares/multerMiddleware.js');
 const cloudinary = require('./config/cloudinaryConfig.js');
+const productRouter = require('./routes/productRoute.js');
 
 
 const app = express();
@@ -23,6 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/user', userRouter);
 app.get('/carts', cartRouter);
 app.use('/auth', authRouter);
+app.use('/products', productRouter);
 
 app.get('/ping', isLoggedIn, (req, res) => {
     // controller

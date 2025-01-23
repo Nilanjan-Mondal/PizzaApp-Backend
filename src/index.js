@@ -57,3 +57,6 @@ app.listen(ServerConfig.PORT, async () => {
     // console.log("New user created successfully");
     // console.log(newUser2);
 });
+
+
+

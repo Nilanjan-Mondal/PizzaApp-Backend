@@ -13,7 +13,9 @@ async function createCart(userId) {
 
 async function getCartByUserId(userId) {
     try {
-        const cart = await Cart.findOne({ user: userId });
+        const cart = await Cart.findOne({ 
+            user: userId 
+        }).populate("items.product"); // we were only getting the product id, now we are getting the whole product object because of populate without this cart was returning only product id but now it will return the whole product object, in the cartschema we have product ref to Product, so the whole Product object will be returned (this is mongoose join operation)
         return cart;
     } catch (error) {
         throw error;

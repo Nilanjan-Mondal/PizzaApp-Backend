@@ -28,7 +28,8 @@ async function createProduct(productDetails) {
         price: productDetails.price,
         category: productDetails.category,
         inStock: productDetails.inStock,
-        productImage: productImage 
+        productImage: productImage,
+        quantity: productDetails.quantity
     })
 
     if(!product) {

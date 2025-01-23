@@ -1,4 +1,4 @@
-const { getCart } = require("../services/cartService");
+const { getCart, addToCart } = require("../services/cartService");
 
 async function getCartByUser(req, res) {
 
@@ -23,4 +23,28 @@ async function getCartByUser(req, res) {
     }
 }
 
-module.exports = { getCartByUser };
+async function addProductToCart(req, res) {
+
+    try {
+        const cart = await addToCart(req.user.id, req.params.productId);
+        return res.status(200).json({
+            success: true,
+            message: "Successfully added product to the cart",
+            error: {},
+            data: cart
+        })
+    } catch (error) {
+        console.log(error);
+        return res.status(error.statusCode || 500).json({
+            message: error.message || "An unexpected error occurred",
+            success: false,
+            data: {},
+            error: error
+        })
+    }
+}
+
+module.exports = { 
+    getCartByUser,
+    addProductToCart
+};

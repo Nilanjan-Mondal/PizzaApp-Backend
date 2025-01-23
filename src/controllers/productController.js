@@ -10,6 +10,7 @@ async function addProduct(req, res) {
             price: req.body.price,
             category: req.body.category,
             inStock: req.body.inStock,
+            quantity: req.body.quantity,
             imagePath: req.file?.path // contains the path of the image uploaded (eg -> uploads/1737310134715.jpeg)
         });
         return res.status(201).json({

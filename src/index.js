@@ -22,7 +22,7 @@ app.use(express.text());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/user', userRouter);
-app.get('/carts', cartRouter);
+app.use('/carts', cartRouter);
 app.use('/auth', authRouter);
 app.use('/products', productRouter);
 

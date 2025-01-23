@@ -1,6 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser')
 const fs = require('fs/promises');
+const cors = require('cors');
 
 const ServerConfig = require('./config/serverConfig');
 const connectDB = require('./config/dbConfig');
@@ -16,6 +17,7 @@ const productRouter = require('./routes/productRoute.js');
 
 const app = express();
 
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.text());

@@ -38,6 +38,24 @@ async function loginUser (authDetails) {
     return token;
 }
 
+async function logoutUser (req, res) {
+    try {
+        return res.status(200).cookie("authToken", "", {maxAge: 0}).json({
+            message: "User logged out successfully",
+            success: true,
+            data: {},
+            error: {}
+        })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            success:false,
+            message:"Failed to logout"
+        })
+    }
+}
+
 module.exports = {
-    loginUser
+    loginUser,
+    logoutUser
 }
